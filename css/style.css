@@ -7,7 +7,7 @@
   --secondary-color:              #9b8876; /*final*/
   --section-bg-color:             #202124;
   --second-section-bg-color:      #282828;
-  --custom-btn-bg-color:          #BC6C25;
+  --custom-btn-bg-color:          #CF8141;
   --custom-btn-bg-hover-color:    #DDA15E;
   --dark-color:                   #000000;
   --p-color:                      #717275;
@@ -158,6 +158,10 @@ strong {
 .section-overlay + .container {
   position: relative;
   z-index: 22;
+}
+
+#section_2 .section-text{
+    text-align: end;
 }
 
 
@@ -471,10 +475,12 @@ strong {
   font-size: var(--btn-font-size);
   font-weight: var(--font-weight-normal);
   margin-bottom: 10px;
+  gap: 15px;
 }
 
-.opening-hours-list li .spacing {
-  width: 20%;
+.opening-hours-list .country-name {
+  display: inline-block;
+  width: 90px;
 }
 
 
@@ -662,6 +668,10 @@ strong {
   .site-footer {
     padding-top: 50px;
     padding-bottom: 50px;
+  }
+
+    #section_2 .section-text{
+    text-align: start;
   }
 }
 

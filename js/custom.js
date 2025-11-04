@@ -12,7 +12,8 @@
       $('.hero-slides').vegas({
           slides: [
               { src: 'images/bible_with_leaves.jpg' },
-              // { src: 'images/bible_wind.jpg' },
+              { src: 'images/books.jpg' },
+              { src: 'images/bibles.jpg' },
           ],
           timer: false,
           delay: 15e3,
