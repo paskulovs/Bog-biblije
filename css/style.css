@@ -572,6 +572,7 @@ strong {
 .social-icon {
   margin: 0;
   padding: 0;
+  min-width: max-content;
 }
 
 .social-icon-item {
