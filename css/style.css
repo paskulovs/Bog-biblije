@@ -223,6 +223,11 @@ strong {
   padding: 15px 30px;
 }
 
+.navbar .container:has(.navbar-toggler[aria-expanded="true"]),
+.navbar .container:has(.navbar-collapse.show) {
+  background: rgba(0, 0, 0, 0.65);
+}
+
 .navbar {
   background: transparent;
   z-index: 999999;
@@ -643,7 +648,7 @@ strong {
     padding-bottom: 50px;
   }
 
-  .hero-section {
+  .hero-section .container {
     padding-top: 148px;
     padding-bottom: 100px;
   }
@@ -677,6 +682,13 @@ strong {
 
   #section_3 .row {
     flex-direction: column-reverse;
+  }
+
+  .hero-section::after {
+    width: 260px;
+    height: 320px;
+    top: 55%;
+    left: 50%;
   }
 }
 
@@ -718,16 +730,8 @@ strong {
     font-size: 20px;
   }
 
-  .hero-section::after {
-    width: 260px;
-    height: 320px;
-    top: 55%;
-    left: 50%;
-  }
-
   .opening-hours-list li {
     font-size: 12px;
   }
-
 }
 
