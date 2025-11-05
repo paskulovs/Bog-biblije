@@ -239,6 +239,12 @@ strong {
   background: rgba(0, 0, 0, 0.35);
   border-radius: var(--border-radius-medium);
   padding: 15px 30px;
+  transition: background 200ms linear;
+}
+
+.navbar .container:has(.navbar-toggler:not(.collapsed)) {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(2px);
 }
 
 .navbar-brand,
