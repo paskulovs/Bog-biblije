@@ -591,8 +591,9 @@ strong {
   border-radius: var(--border-radius-large);
   color: var(--white-color);
   font-size: 21px;
-  display: block;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 45px;
   height: 45px;
   line-height: 45px;
