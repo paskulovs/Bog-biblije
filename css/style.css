@@ -530,7 +530,7 @@ strong {
   SITE FOOTER              
 -----------------------------------------*/
 .site-footer {
-  background: linear-gradient(to bottom, var(--section-bg-color), var(--custom-btn-bg-color));
+  background: linear-gradient(to bottom, var(--section-bg-color), var(--custom-btn-bg-color) 160% );
   padding-top: 100px;
   padding-bottom: 100px;
 }
