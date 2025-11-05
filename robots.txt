@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://bogbiblije.com/sitemap.xml
+
+# Disallow specific directories if needed
+Disallow: /css/
+Disallow: /js/
+Disallow: /fonts/
