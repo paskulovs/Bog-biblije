@@ -510,7 +510,7 @@ strong {
 }
 
 .about-video-info {
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), rgba(188, 108, 37, 0.8));
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), rgb(from var(--custom-btn-bg-color) r g b / 0.7));
   border-radius: var(--border-radius-medium);
   bottom: 0;
   height: auto;
