@@ -671,8 +671,12 @@ strong {
     padding-bottom: 50px;
   }
 
-    #section_2 .section-text{
+  #section_2 .section-text{
     text-align: start;
+  }
+
+  #section_3 .row {
+    flex-direction: column-reverse;
   }
 }
 
@@ -724,5 +728,6 @@ strong {
   .opening-hours-list li {
     font-size: 12px;
   }
+
 }
 
