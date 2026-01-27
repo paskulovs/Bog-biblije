@@ -643,6 +643,11 @@ strong {
     font-size: 18px;
   }
 
+  .navbar {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
   .section-padding {
     padding-top: 50px;
     padding-bottom: 50px;
