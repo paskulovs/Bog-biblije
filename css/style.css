@@ -2,45 +2,54 @@
   CUSTOM PROPERTIES ( VARIABLES )             
 -----------------------------------------*/
 :root {
-  --white-color:                  #ffffff;
-  --primary-color:                #d2a97d;
-  --secondary-color:              #9b8876; /*final*/
-  --section-bg-color:             #202124;
-  --second-section-bg-color:      #282828;
-  --custom-btn-bg-color:          #CF8141;
-  --custom-btn-bg-hover-color:    #DDA15E;
-  --dark-color:                   #000000;
-  --p-color:                      #717275;
-  --border-color:                 #7fffd4;
-  --link-hover-color:             #E76F51;
-  --highlight-color:              #ffffffbd;
+  --white-color: #ffffff;
+  --primary-color: #e6c882;
+  --secondary-color: #9b8876;
+  /*final*/
+  --section-bg-color: #202124;
+  --second-section-bg-color: #282828;
+  --custom-btn-bg-color: #CF8141;
+  --custom-btn-bg-hover-color: #DDA15E;
+  --dark-color: #000000;
+  --p-color: #717275;
+  --border-color: #7fffd4;
+  --link-hover-color: #E76F51;
+  --highlight-color: #ffffffbd;
+  --gold-gradient: linear-gradient(135deg,
+      #9a6a1f 0%,
+      #d8ab4f 18%,
+      #d2b86f 34%,
+      #e4c36d 48%,
+      #c08731 64%,
+      #f8efc1 82%,
+      #a36a22 100%);
 
-  --body-font-family:             "Cardo", serif;
+  --body-font-family: "Cardo", serif;
 
-  --h1-font-size:                 68px;
-  --h2-font-size:                 46px;
-  --h3-font-size:                 32px;
-  --h4-font-size:                 28px;
-  --h5-font-size:                 24px;
-  --h6-font-size:                 22px;
-  --p-font-size:                  20px;
-  --btn-font-size:                16px;
-  --form-btn-font-size:           18px;
-  --menu-font-size:               16px;
+  --h1-font-size: 68px;
+  --h2-font-size: 46px;
+  --h3-font-size: 32px;
+  --h4-font-size: 28px;
+  --h5-font-size: 24px;
+  --h6-font-size: 22px;
+  --p-font-size: 20px;
+  --btn-font-size: 16px;
+  --form-btn-font-size: 18px;
+  --menu-font-size: 16px;
 
-  --border-radius-large:          100px;
-  --border-radius-medium:         20px;
-  --border-radius-small:          10px;
+  --border-radius-large: 100px;
+  --border-radius-medium: 20px;
+  --border-radius-small: 10px;
 
-  --font-weight-thin:             200;
-  --font-weight-light:            300;
-  --font-weight-normal:           400;
-  --font-weight-bold:             700;
+  --font-weight-thin: 200;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
 }
 
 body {
   background-color: var(--white-color);
-  font-family: var(--body-font-family); 
+  font-family: var(--body-font-family);
 }
 
 
@@ -101,7 +110,7 @@ ul li {
   font-weight: var(--font-weight-light);
 }
 
-a, 
+a,
 button {
   touch-action: manipulation;
   transition: all 0.3s;
@@ -155,13 +164,13 @@ strong {
   opacity: 0.65;
 }
 
-.section-overlay + .container {
+.section-overlay+.container {
   position: relative;
   z-index: 22;
 }
 
-#section_2 .section-text{
-    text-align: end;
+#section_2 .section-text {
+  text-align: end;
 }
 
 
@@ -194,6 +203,11 @@ strong {
 .custom-border-btn:hover {
   background: var(--white-color);
   color: var(--secondary-color);
+}
+
+.custom-btn.gold-btn {
+  background-image: var(--gold-gradient);
+  color: var(--dark-color);
 }
 
 .secondary-btn {
@@ -278,14 +292,14 @@ strong {
   padding-bottom: 15px;
 }
 
-.navbar-nav .nav-link.active, 
+.navbar-nav .nav-link.active,
 .navbar-nav .nav-link:hover {
   color: var(--custom-btn-bg-hover-color);
 }
 
 .navbar .dropdown-menu {
   background: var(--white-color);
-  box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175);
   border: 0;
   display: inherit;
   opacity: 0;
@@ -316,9 +330,9 @@ strong {
   position: relative;
 }
 
-.navbar .dropdown-item.active, 
+.navbar .dropdown-item.active,
 .navbar .dropdown-item:active,
-.navbar .dropdown-item:focus, 
+.navbar .dropdown-item:focus,
 .navbar .dropdown-item:hover {
   background: transparent;
   color: var(--link-hover-color);
@@ -433,11 +447,8 @@ strong {
   border-radius: var(--border-radius-medium);
   content: "";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-55%, -50%) rotate(45deg);
-  width: 300px;
-  height: 400px;
+  width: 500px;
+  height: 300px;
   pointer-events: none;
 }
 
@@ -459,9 +470,34 @@ strong {
   border-color: transparent;
 }
 
+.hero-section .custom-btn {
+  font-size: calc(var(--btn-font-size) * 0.9);
+  padding: calc(12px * 0.9) calc(28px * 0.9);
+}
+
 .hero-section .container {
   position: relative;
   z-index: 9;
+  width: 500px;
+  height: 300px;
+  padding-left: 0;
+}
+
+.hero-section .row {
+  height: 100%;
+}
+
+.hero-section .hero-image-col {
+  height: 100%;
+}
+
+.hero-section .hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-top-left-radius: var(--border-radius-medium);
+  border-bottom-left-radius: var(--border-radius-medium);
 }
 
 .hero-slides {
@@ -535,7 +571,7 @@ strong {
   SITE FOOTER              
 -----------------------------------------*/
 .site-footer {
-  background: linear-gradient(to bottom, var(--section-bg-color), var(--custom-btn-bg-color) 160% );
+  background: linear-gradient(to bottom, var(--section-bg-color), var(--custom-btn-bg-color) 160%);
   padding-top: 100px;
   padding-bottom: 100px;
 }
@@ -567,7 +603,7 @@ strong {
 }
 
 .copyright-text a {
-	color: rgba(255, 200, 160, 0.75);
+  color: rgba(255, 200, 160, 0.75);
 }
 
 
@@ -653,11 +689,6 @@ strong {
     padding-bottom: 50px;
   }
 
-  .hero-section .container {
-    padding-top: 148px;
-    padding-bottom: 100px;
-  }
-
   .navbar-brand,
   .navbar-brand:hover {
     font-size: var(--h5-font-size);
@@ -681,7 +712,7 @@ strong {
     padding-bottom: 50px;
   }
 
-  #section_2 .section-text{
+  #section_2 .section-text {
     text-align: start;
   }
 
@@ -690,10 +721,13 @@ strong {
   }
 
   .hero-section::after {
-    width: 260px;
-    height: 320px;
-    top: 55%;
-    left: 52%;
+    width: 380px;
+    height: 300px;
+  }
+
+  .hero-section .container {
+    width: 380px;
+    padding: 0;
   }
 }
 
@@ -706,6 +740,7 @@ strong {
 
 
 @media screen and (max-width: 578px) {
+
   .navbar .container,
   .sticky-wrapper.is-sticky .container {
     margin-right: 10px;
@@ -738,5 +773,29 @@ strong {
   .opening-hours-list li {
     font-size: 12px;
   }
-}
 
+  .navbar-brand {
+    font-size: var(--h6-font-size);
+  }
+
+  .navbar-brand-image {
+    width: 48px;
+    height: auto;
+    margin-right: 15px;
+  }
+
+  .hero-section::after {
+    width: 300px;
+    height: 350px;
+  }
+
+  .hero-section .container {
+    width: 300px;
+    height: 350px;
+    padding: 0;
+  }
+
+  #hero-card-content {
+    padding-left: 0;
+  }
+}
