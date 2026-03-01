@@ -3,16 +3,13 @@
 -----------------------------------------*/
 :root {
   --white-color: #ffffff;
-  --primary-color: #e6c882;
-  --secondary-color: #9b8876;
-  /*final*/
-  --section-bg-color: #202124;
+  --primary-color: #CF8141;
+  --secondary-color: #e6c882;
+  --ternary-color: #DDA15E;
+  --section-bg-color: #1e1f1f;
   --second-section-bg-color: #282828;
-  --custom-btn-bg-color: #CF8141;
-  --custom-btn-bg-hover-color: #DDA15E;
   --dark-color: #000000;
-  --p-color: #717275;
-  --border-color: #7fffd4;
+  --text-color: #717275;
   --link-hover-color: #E76F51;
   --highlight-color: #ffffffbd;
   --gold-gradient: linear-gradient(135deg,
@@ -99,13 +96,13 @@ h6 {
 }
 
 p {
-  color: var(--p-color);
+  color: var(--text-color);
   font-size: var(--p-font-size);
   font-weight: var(--font-weight-light);
 }
 
 ul li {
-  color: var(--p-color);
+  color: var(--text-color);
   font-size: var(--p-font-size);
   font-weight: var(--font-weight-light);
 }
@@ -118,7 +115,7 @@ button {
 
 a {
   display: inline-block;
-  color: var(--primary-color);
+  color: var(--secondary-color);
   text-decoration: none;
 }
 
@@ -178,7 +175,7 @@ strong {
   CUSTOM BUTTON               
 -----------------------------------------*/
 .custom-btn {
-  background: var(--custom-btn-bg-color);
+  background: var(--primary-color);
   border: 2px solid transparent;
   border-radius: var(--border-radius-large);
   color: var(--white-color);
@@ -190,7 +187,7 @@ strong {
 }
 
 .custom-btn:hover {
-  background: var(--custom-btn-bg-hover-color);
+  background: var(--ternary-color);
   color: var(--white-color);
 }
 
@@ -202,7 +199,7 @@ strong {
 
 .custom-border-btn:hover {
   background: var(--white-color);
-  color: var(--secondary-color);
+  color: var(--text-color);
 }
 
 .custom-btn.gold-btn {
@@ -212,7 +209,7 @@ strong {
 
 .secondary-btn {
   background: var(--white-color);
-  color: var(--secondary-color);
+  color: var(--text-color);
 }
 
 .secondary-btn:hover {
@@ -294,7 +291,7 @@ strong {
 
 .navbar-nav .nav-link.active,
 .navbar-nav .nav-link:hover {
-  color: var(--custom-btn-bg-hover-color);
+  color: var(--secondary-color);
 }
 
 .navbar .dropdown-menu {
@@ -324,7 +321,7 @@ strong {
 
 .navbar .dropdown-item {
   display: inline-block;
-  color: var(--p-color);
+  color: var(--text-color);
   font-size: var(--menu-font-size);
   font-weight: var(--font-weight-medium);
   position: relative;
@@ -463,7 +460,7 @@ strong {
 }
 
 .small-text {
-  color: var(--secondary-color);
+  color: var(--text-color);
 }
 
 .hero-section .custom-border-btn {
@@ -551,7 +548,7 @@ strong {
 }
 
 .about-video-info {
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), rgb(from var(--custom-btn-bg-color) r g b / 0.7));
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), rgb(from var(--primary-color) r g b / 0.7));
   border-radius: var(--border-radius-medium);
   bottom: 0;
   height: auto;
@@ -563,7 +560,7 @@ strong {
 }
 
 .about-section h6 {
-  color: var(--secondary-color);
+  color: var(--text-color);
 }
 
 
@@ -571,9 +568,12 @@ strong {
   SITE FOOTER              
 -----------------------------------------*/
 .site-footer {
-  background: linear-gradient(to bottom, var(--section-bg-color), var(--custom-btn-bg-color) 160%);
+  position: relative;
+  background: var(--second-section-bg-color);
+  border-top: 1px solid rgba(207, 129, 65, 0.65);
   padding-top: 100px;
   padding-bottom: 100px;
+  overflow: hidden;
 }
 
 .site-footer strong {
@@ -623,7 +623,7 @@ strong {
 }
 
 .social-icon-link {
-  background: var(--custom-btn-bg-color);
+  background: var(--primary-color);
   border-radius: var(--border-radius-large);
   color: var(--white-color);
   font-size: 21px;
@@ -637,7 +637,7 @@ strong {
 
 .social-icon-link:hover {
   background: var(--white-color);
-  color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 .social-icon-link span {
