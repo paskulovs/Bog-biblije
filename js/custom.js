@@ -58,17 +58,21 @@
     });
     
     // CUSTOM LINK
-    $('.smoothscroll').click(function(){
-      var el = $(this).attr('href');
-      var elWrapped = $(el);
+    $('.smoothscroll[href^="#"]').click(function(){
+      const el = $(this).attr('href');
+      const elWrapped = $(el);
+
+      if (!elWrapped.length) {
+        return true;
+      }
   
       scrollToDiv(elWrapped);
       return false;
   
       function scrollToDiv(element){
-        var offset = element.offset();
-        var offsetTop = offset.top;
-        var totalScroll = offsetTop;
+        const offset = element.offset();
+        const offsetTop = offset.top;
+        const totalScroll = offsetTop;
   
         $('body,html').animate({
         scrollTop: totalScroll
@@ -77,4 +81,3 @@
     });
   
   })(window.jQuery);
-
