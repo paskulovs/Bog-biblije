@@ -15,6 +15,57 @@ const DEFAULT_TITLE =
 const DEFAULT_DESCRIPTION =
   "Bog Biblije - Besplatna distribucija Svetog Pisma, kamp Deca Neba i promovisanje Božije Reči kao jedinog autoriteta u oblasti religije.";
 
+const FOOTER_SOCIAL_LINKS = [
+  {
+    href: "https://www.facebook.com/people/Bog-Biblije/100086580107596/",
+    iconClass: "bi-facebook",
+    label: "Facebook",
+  },
+  {
+    href: "https://www.instagram.com/bog_biblije/",
+    iconClass: "bi-instagram",
+    label: "Instagram",
+  },
+  {
+    href: "https://www.tiktok.com/@bogbiblije?_t=8geA8RiIXyf&_r=1",
+    iconClass: "bi-tiktok",
+    label: "TikTok",
+  },
+  {
+    href: "https://www.youtube.com/@Bog-Biblije",
+    iconClass: "bi-youtube",
+    label: "YouTube",
+  },
+  {
+    href: "https://invite.viber.com/?g2=AQBEs0H7dv2Qw1Rb9wryec4gHV2nyERWSThNrSFi2vNjcVn1fJmIZUTou4pbn9bE",
+    iconClass: "bi-whatsapp",
+    label: "Viber",
+  },
+] as const;
+
+const FOOTER_PHONE_NUMBERS = [
+  {
+    country: "Srbija",
+    href: "tel:+38169646064",
+    value: "+381 69 64 60 64",
+  },
+  {
+    country: "Crna Gora",
+    href: "tel:+38267031818",
+    value: "+382 67 03 18 18",
+  },
+  {
+    country: "BiH",
+    href: "tel:+38763733594",
+    value: "+387 63 73 35 94",
+  },
+  {
+    country: "Hrvatska",
+    href: "tel:+385977076126",
+    value: "+385 97 70 76 126",
+  },
+] as const;
+
 export default function SiteLayout({
   children,
   title = DEFAULT_TITLE,
@@ -27,6 +78,7 @@ export default function SiteLayout({
   const [searchOpen, setSearchOpen] = useState(false);
   const stickyWrapperRef = useRef<HTMLDivElement | null>(null);
   const isHomePage = router.pathname === "/";
+  const currentYear = new Date().getFullYear();
 
   useEffect(() => {
     if (!isHomePage) {
@@ -183,119 +235,71 @@ export default function SiteLayout({
 
       <footer className="site-footer" id="kontakt" aria-label="Kontakt informacije">
         <div className="container">
-          <div className="row">
-            <div className="col-lg-4 col-12 me-auto">
-              <em className="text-white d-block mb-4">Gde nas možete naći?</em>
+          <div className="footer-shell">
+            <div className="row g-4 g-xl-5 align-items-stretch">
+              <div className="col-xl-5 col-lg-12">
+                <div className="footer-intro">
+                  <span className="footer-eyebrow">Kontakt</span>
+                  <h2 className="footer-title">Kontaktirajte nas</h2>
+                  <p className="footer-description">
+                    Možete nas kontaktirati putem naloga na društvenim mrežama, putem telefona ili putem email-a.
+                  </p>
+                  <br/>
+                  <ul className="social-icon footer-social" aria-label="Društvene mreže">
+                    {FOOTER_SOCIAL_LINKS.map((socialLink) => (
+                      <li className="social-icon-item" key={socialLink.label}>
+                        <a
+                          href={socialLink.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`social-icon-link ${socialLink.iconClass}`}
+                          aria-label={socialLink.label}
+                        ></a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
 
-              <strong className="text-white">
-                Možete nas kontaktirati putem naloga na društvenim mrežama, putem telefona ili putem
-                email-a.
-              </strong>
-
-              <ul className="social-icon mt-4">
-                <li className="social-icon-item me-3">
-                  <a
-                    href="https://www.facebook.com/people/Bog-Biblije/100086580107596/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-icon-link bi-facebook"
-                  ></a>
-                </li>
-
-                <li className="social-icon-item me-3">
-                  <a
-                    href="https://www.instagram.com/bog_biblije/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-icon-link bi-instagram"
-                  ></a>
-                </li>
-
-                <li className="social-icon-item me-3">
-                  <a
-                    href="https://www.tiktok.com/@bogbiblije?_t=8geA8RiIXyf&_r=1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-icon-link bi-tiktok"
-                  ></a>
-                </li>
-
-                <li className="social-icon-item me-3">
-                  <a
-                    href="https://www.youtube.com/@Bog-Biblije"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-icon-link bi-youtube"
-                  ></a>
-                </li>
-
-                <li className="social-icon-item me-3">
-                  <a
-                    href="https://invite.viber.com/?g2=AQBEs0H7dv2Qw1Rb9wryec4gHV2nyERWSThNrSFi2vNjcVn1fJmIZUTou4pbn9bE"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-icon-link bi-whatsapp"
-                  ></a>
-                </li>
-              </ul>
-            </div>
-
-            <div className="col-lg-3 col-12 mt-4 mb-3 mt-lg-0 mb-lg-0">
-              <em className="text-white d-block mb-4">Email</em>
-
-              <p className="d-flex">
-                <strong className="me-2">
-                  <a href="mailto:bogbilije@gmail.com" className="site-footer-link">
+              <div className="col-xl-3 col-lg-5 col-md-6">
+                <div className="footer-card footer-contact-card">
+                  <span className="footer-label">Email</span>
+                  <br/>
+                  <br/>
+                  <a href="mailto:bogbilije@gmail.com" className="site-footer-link footer-email-link">
                     bogbilije@gmail.com
                   </a>
-                </strong>
-              </p>
+                  <p className="footer-card-text">
+                    Pišite nam za dodatne informacije, naručivanje knjiga ili pitanja u vezi sa
+                    sadržajem sajta.
+                  </p>
+                </div>
+              </div>
+
+              <div className="col-xl-4 col-lg-7 col-md-6">
+                <div className="footer-card footer-phone-card">
+                  <div className="footer-card-head">
+                    <span className="footer-label mb-0">Telefon</span>
+                  </div>
+
+                  <ul className="footer-phone-list">
+                    {FOOTER_PHONE_NUMBERS.map((phoneNumber) => (
+                      <li className="footer-phone-item" key={phoneNumber.country}>
+                        <span className="country-name">{phoneNumber.country}</span>
+                        <strong>
+                          <a href={phoneNumber.href} className="site-footer-link footer-phone-link">
+                            {phoneNumber.value}
+                          </a>
+                        </strong>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
 
-            <div className="col-lg-5 col-12">
-              <em className="text-white d-block mb-4">Telefon</em>
-
-              <ul className="opening-hours-list">
-                <li className="d-flex">
-                  <span className="country-name">Srbija</span>
-                  <strong>
-                    <a href="tel:+38169646064" className="site-footer-link">
-                      +381 69 64 60 64
-                    </a>
-                  </strong>
-                </li>
-
-                <li className="d-flex">
-                  <span className="country-name">Crna Gora</span>
-                  <strong>
-                    <a href="tel:+38267031818" className="site-footer-link">
-                      +382 67 03 18 18
-                    </a>
-                  </strong>
-                </li>
-
-                <li className="d-flex">
-                  <span className="country-name">BiH</span>
-                  <strong>
-                    <a href="tel:+38763733594" className="site-footer-link">
-                      +387 63 73 35 94
-                    </a>
-                  </strong>
-                </li>
-
-                <li className="d-flex">
-                  <span className="country-name">Hrvatska</span>
-                  <strong>
-                    <a href="tel:+385977076126" className="site-footer-link">
-                      +385 97 70 76 126
-                    </a>
-                  </strong>
-                </li>
-              </ul>
-            </div>
-
-            <div className="col-lg-8 col-12 mt-4">
-              <p className="copyright-text mb-0">Copyright © Bog Biblije 2025</p>
+            <div className="footer-bottom">
+              <p className="copyright-text mb-0">Copyright © Bog Biblije</p>
             </div>
           </div>
         </div>

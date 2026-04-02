@@ -184,7 +184,7 @@ code {
 }
 
 .article-audio-wrap {
-  margin: 24px 0;
+  margin: 24px 0 0;
 }
 
 .article-audio-wrap audio {
@@ -195,6 +195,7 @@ code {
   color: rgba(255, 255, 255, 0.92);
   font-size: 1.15rem;
   line-height: 1.75;
+  padding-top: 24px;
 }
 
 .article-content h2,
@@ -262,7 +263,40 @@ code {
 }
 
 .article-card-small {
-  max-height: 300px;
+  aspect-ratio: 16 / 10;
+  max-height: 230px;
+}
+
+.article-card-small .blog-section-image-wrap,
+.article-card-small .blog-section-image {
+  height: 100%;
+}
+
+.article-card-small .blog-section-info {
+  padding: 20px;
+  justify-content: flex-end;
+}
+
+.article-card-small h4,
+.article-card-small p {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.article-card-small h4 {
+  -webkit-line-clamp: 2;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  line-height: 1.35;
+  text-overflow: ellipsis;
+}
+
+.article-card-small p {
+  -webkit-line-clamp: 1;
+  font-size: 1rem;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  opacity: 0.92;
 }
 
 @media screen and (max-width: 767px) {
@@ -758,7 +792,29 @@ body.search-modal-open {
   gap: 16px;
   min-height: 0;
   overflow: auto;
-  padding-right: 4px;
+  padding-right: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+
+.search-modal-results::-webkit-scrollbar {
+  width: 8px;
+}
+
+.search-modal-results::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.search-modal-results::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.search-modal-results:hover::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.24);
+  background-clip: padding-box;
 }
 
 .search-modal-group {
