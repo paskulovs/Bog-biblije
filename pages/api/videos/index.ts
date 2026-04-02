@@ -1,8 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { requireCmsApiAuth } from "../../../lib/auth";
 import { createVideo, getVideos } from "../../../lib/content-store";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
+    if (!(await requireCmsApiAuth(req, res))) {
+      return;
+    }
+
     const payload = req.body;
 
     if (!payload?.title || !payload?.url || !payload?.categorySlug) {

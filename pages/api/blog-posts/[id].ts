@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { requireCmsApiAuth } from "../../../lib/auth";
 import {
   deleteBlogPost,
   getBlogPostById,
@@ -33,6 +34,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(200).json(post);
     }
 
+    if (!(await requireCmsApiAuth(req, res))) {
+      return;
+    }
+
     const post = await updateBlogPost(postId, req.body);
 
     if (!post) {
@@ -43,6 +48,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === "DELETE") {
+    if (!(await requireCmsApiAuth(req, res))) {
+      return;
+    }
+
     const post = await deleteBlogPost(postId);
 
     if (!post) {

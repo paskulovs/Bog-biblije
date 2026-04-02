@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { requireCmsApiAuth } from "../../../lib/auth";
 import {
   deleteArticle,
   getArticleById,
@@ -30,6 +31,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(200).json(article);
     }
 
+    if (!(await requireCmsApiAuth(req, res))) {
+      return;
+    }
+
     const article = await updateArticle(articleId, req.body);
     if (!article) {
       return res.status(404).json({ error: "Članak nije pronađen." });
@@ -38,6 +43,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === "DELETE") {
+    if (!(await requireCmsApiAuth(req, res))) {
+      return;
+    }
+
     const article = await deleteArticle(articleId);
     if (!article) {
       return res.status(404).json({ error: "Članak nije pronađen." });

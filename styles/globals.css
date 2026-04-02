@@ -385,6 +385,12 @@ body.search-modal-open {
   padding: 20px 24px 0;
 }
 
+.cms-shell-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .cms-shell-content {
   padding: 24px;
 }

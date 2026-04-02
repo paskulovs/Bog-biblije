@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { requireCmsPageAuth } from "../../lib/auth";
 
 const CMS_LINKS = [
   {
@@ -44,3 +45,5 @@ export default function CmsHomePage() {
     </section>
   );
 }
+
+export const getServerSideProps = requireCmsPageAuth;

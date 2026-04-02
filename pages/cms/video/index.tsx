@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import CmsModal from "../../../components/CmsModal";
 import CmsPagination from "../../../components/CmsPagination";
+import { requireCmsPageAuth } from "../../../lib/auth";
 import { Video, VideoInput } from "../../../lib/types";
 
 type VideoSourceFilter = "all" | "true" | "false";
@@ -415,3 +416,5 @@ export default function CmsVideosPage() {
     </section>
   );
 }
+
+export const getServerSideProps = requireCmsPageAuth;

@@ -1,10 +1,12 @@
 import type { AppProps } from "next/app";
+import type { Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import CmsLayout from "../components/CmsLayout";
 import "../styles/globals.css";
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps<{ session?: Session | null }>) {
   const router = useRouter();
   const [isRouteLoading, setIsRouteLoading] = useState(false);
   const isCmsRoute = router.pathname.startsWith("/cms");
@@ -42,24 +44,26 @@ export default function App({ Component, pageProps }: AppProps) {
   );
 
   return (
-    <>
-      {content}
-      <div
-        className={`route-loader ${isRouteLoading ? "is-visible" : ""}`}
-        role="status"
-        aria-live="polite"
-        aria-hidden={!isRouteLoading}
-      >
-        <div className="route-loader-backdrop"></div>
-        <div className="route-loader-panel">
-          <div className="route-loader-spinner" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
+    <SessionProvider session={pageProps.session}>
+      <>
+        {content}
+        <div
+          className={`route-loader ${isRouteLoading ? "is-visible" : ""}`}
+          role="status"
+          aria-live="polite"
+          aria-hidden={!isRouteLoading}
+        >
+          <div className="route-loader-backdrop"></div>
+          <div className="route-loader-panel">
+            <div className="route-loader-spinner" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <p className="route-loader-text">Učitavanje stranice...</p>
           </div>
-          <p className="route-loader-text">Učitavanje stranice...</p>
         </div>
-      </div>
-    </>
+      </>
+    </SessionProvider>
   );
 }

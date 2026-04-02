@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { requireCmsApiAuth } from "../../../lib/auth";
 import { deleteVideo, getVideoById, updateVideo } from "../../../lib/content-store";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -19,6 +20,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === "PUT") {
+    if (!(await requireCmsApiAuth(req, res))) {
+      return;
+    }
+
     const video = await updateVideo(videoId, req.body);
 
     if (!video) {
@@ -29,6 +34,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === "DELETE") {
+    if (!(await requireCmsApiAuth(req, res))) {
+      return;
+    }
+
     const video = await deleteVideo(videoId);
 
     if (!video) {

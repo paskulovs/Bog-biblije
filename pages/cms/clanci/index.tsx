@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import CmsModal from "../../../components/CmsModal";
 import CmsPagination from "../../../components/CmsPagination";
+import { requireCmsPageAuth } from "../../../lib/auth";
 import { BlogPostInput, ReadableArticle } from "../../../lib/types";
 
 type ChildCornerFilter = "all" | "true" | "false";
@@ -428,3 +429,5 @@ export default function CmsArticlesPage() {
     </section>
   );
 }
+
+export const getServerSideProps = requireCmsPageAuth;

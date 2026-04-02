@@ -1,0 +1,31 @@
+CREATE TABLE IF NOT EXISTS "BlogPost" (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  excerpt TEXT NOT NULL,
+  content TEXT NOT NULL,
+  author TEXT NOT NULL,
+  "imageUrl" TEXT NOT NULL,
+  "audioUrl" TEXT,
+  "readCount" INTEGER NOT NULL DEFAULT 0,
+  "isChildCorner" BOOLEAN NOT NULL DEFAULT FALSE,
+  "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS "Book" (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  author TEXT NOT NULL,
+  "imageUrl" TEXT NOT NULL,
+  "pdfUrl" TEXT,
+  description TEXT
+);
+
+CREATE TABLE IF NOT EXISTS "Video" (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  url TEXT NOT NULL,
+  "imageUrl" TEXT NOT NULL DEFAULT 'no-image.jpg',
+  "categorySlug" TEXT NOT NULL,
+  "isYouTube" BOOLEAN NOT NULL DEFAULT FALSE,
+  "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);

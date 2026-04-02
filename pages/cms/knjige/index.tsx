@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import CmsModal from "../../../components/CmsModal";
 import CmsPagination from "../../../components/CmsPagination";
+import { requireCmsPageAuth } from "../../../lib/auth";
 import { Book, BookInput } from "../../../lib/types";
 
 type BookCategoryFilter = "all" | "pdf" | "free-books";
@@ -393,3 +394,5 @@ export default function CmsBooksPage() {
     </section>
   );
 }
+
+export const getServerSideProps = requireCmsPageAuth;

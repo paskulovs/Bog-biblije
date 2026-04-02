@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { requireCmsApiAuth } from "../../../lib/auth";
 import { createArticle, queryArticles } from "../../../lib/article-store";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -12,6 +13,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === "POST") {
+    if (!(await requireCmsApiAuth(req, res))) {
+      return;
+    }
+
     const payload = req.body;
 
     if (!payload?.title || !payload?.excerpt || !payload?.content || !payload?.author) {

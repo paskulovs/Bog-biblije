@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { PropsWithChildren } from "react";
 
@@ -50,9 +51,18 @@ export default function CmsLayout({ children, title = "CMS | Bog Biblije" }: Cms
 
         <div className="cms-shell-main">
           <header className="cms-shell-header">
-            <Link href="/" passHref>
-              <a className="btn custom-btn custom-border-btn">Nazad na sajt</a>
-            </Link>
+            <div className="cms-shell-actions">
+              <Link href="/" passHref>
+                <a className="btn custom-btn custom-border-btn">Nazad na sajt</a>
+              </Link>
+              <button
+                type="button"
+                className="btn custom-btn custom-border-btn"
+                onClick={() => signOut({ callbackUrl: "/api/auth/signin?callbackUrl=%2Fcms" })}
+              >
+                Odjava
+              </button>
+            </div>
           </header>
 
           <main className="cms-shell-content">{children}</main>
