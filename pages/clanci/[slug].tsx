@@ -9,6 +9,7 @@ import {
 } from "../../lib/article-store";
 import { getArticleIdFromSlugParam, getArticlePath } from "../../lib/content-routes";
 import { getBlogPostById, getMostReadBlogPosts } from "../../lib/content-store";
+import { formatSerbianDate } from "../../lib/date";
 import { ReadableArticle } from "../../lib/types";
 
 interface ArticleDetailsPageProps {
@@ -86,8 +87,7 @@ export default function ArticleDetailsPage({
               <h1 className="text-white article-title mb-3">{article.title}</h1>
               <p className="text-white article-summary">{article.excerpt}</p>
               <p className="article-meta-line">
-                {new Date(article.createdAt).toLocaleDateString("sr-RS")} · {article.author} ·{" "}
-                {article.readCount} pregleda
+                {formatSerbianDate(article.createdAt)} · {article.author}
               </p>
             </div>
           </div>

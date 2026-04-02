@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useRef, useState } from "react";
 import SearchModal from "./SearchModal";
 
 interface SiteLayoutProps extends PropsWithChildren {
@@ -25,6 +25,7 @@ export default function SiteLayout({
   const [menuOpen, setMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const stickyWrapperRef = useRef<HTMLDivElement | null>(null);
   const isHomePage = router.pathname === "/";
 
   useEffect(() => {
@@ -41,6 +42,21 @@ export default function SiteLayout({
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, [isHomePage]);
+
+  useEffect(() => {
+    const syncHeaderHeight = () => {
+      const headerHeight = stickyWrapperRef.current?.getBoundingClientRect().height ?? 0;
+      document.documentElement.style.setProperty("--site-header-height", `${Math.ceil(headerHeight)}px`);
+    };
+
+    syncHeaderHeight();
+    window.addEventListener("resize", syncHeaderHeight);
+
+    return () => {
+      window.removeEventListener("resize", syncHeaderHeight);
+      document.documentElement.style.removeProperty("--site-header-height");
+    };
+  }, [isSticky, menuOpen, router.pathname]);
 
   const closeMenu = () => setMenuOpen(false);
   const openSearch = () => {
@@ -72,6 +88,7 @@ export default function SiteLayout({
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
 
       <div
+        ref={stickyWrapperRef}
         className={`sticky-wrapper ${isHomePage ? "sticky-wrapper-home" : ""} ${
           isSticky ? "is-sticky" : ""
         }`}

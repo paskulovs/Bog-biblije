@@ -1,4 +1,5 @@
 import { getVideoWatchUrl } from "../lib/content-routes";
+import { formatSerbianDate } from "../lib/date";
 import { Video } from "../lib/types";
 
 interface VideoCardProps {
@@ -25,7 +26,7 @@ export default function VideoCard({ video }: VideoCardProps) {
       <div className="content-card-body">
         <span className="content-card-tag">{video.isYouTube ? "YouTube" : "Video"}</span>
         <p className="content-card-meta">
-          {new Date(video.createdAt).toLocaleDateString("sr-RS")}
+          {formatSerbianDate(video.createdAt)}
         </p>
         <h3 className="content-card-title">{video.title}</h3>
 

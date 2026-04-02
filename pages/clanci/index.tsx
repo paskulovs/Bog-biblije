@@ -78,7 +78,7 @@ export default function ArticlesPage({ articles, sort }: ArticlesPageProps) {
             ) : null}
 
             {articles.map((article) => (
-              <div className="col-lg-4 col-md-6 col-12 mb-4" key={article.id}>
+              <div className="col-lg-4 col-md-6 col-12 mb-4 article-card-column" key={article.id}>
                 <ArticleCard article={article} />
               </div>
             ))}
