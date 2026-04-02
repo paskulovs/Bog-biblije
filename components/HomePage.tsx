@@ -258,7 +258,7 @@ export default function HomePage({ latestArticles }: HomePageProps) {
         </div>
       </section>
 
-      <section className="about-section section-padding" id="section_5" aria-label="O nama">
+      <section className="about-section section-padding" id="o-nama" aria-label="O nama">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-12 col-12 text-center mb-4 pb-lg-2">

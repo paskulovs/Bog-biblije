@@ -152,7 +152,7 @@ export default function SiteLayout({
                 </li>
 
                 <li className="nav-item">
-                  <Link href="/#section_5" passHref>
+                  <Link href="/#o-nama" passHref>
                     <a className="nav-link smoothscroll" onClick={closeMenu}>
                       O nama
                     </a>
@@ -160,7 +160,7 @@ export default function SiteLayout({
                 </li>
 
                 <li className="nav-item">
-                  <Link href="/#section_6" passHref>
+                  <Link href="/#kontakt" passHref>
                     <a className="nav-link smoothscroll" onClick={closeMenu}>
                       Kontakt
                     </a>
@@ -181,7 +181,7 @@ export default function SiteLayout({
 
       <main>{children}</main>
 
-      <footer className="site-footer" id="section_6" aria-label="Kontakt informacije">
+      <footer className="site-footer" id="kontakt" aria-label="Kontakt informacije">
         <div className="container">
           <div className="row">
             <div className="col-lg-4 col-12 me-auto">

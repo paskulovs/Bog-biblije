@@ -38,7 +38,7 @@ export default function BookCard({ book }: BookCardProps) {
           </a>
 
           {!hasPdf ? (
-            <Link href="/#section_6" passHref>
+            <Link href="/#kontakt" passHref>
               <a className="btn custom-btn">Kontakt</a>
             </Link>
           ) : null}

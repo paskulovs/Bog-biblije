@@ -57,15 +57,33 @@ export default function CmsBooksPage() {
         const response = await fetch(`/api/books?${params.toString()}`, {
           signal: controller.signal,
         });
+
+        if (!response.ok) {
+          throw new Error("Failed to load books.");
+        }
+
         const data = (await response.json()) as BooksResponse;
+
+        if (controller.signal.aborted) {
+          return;
+        }
+
         setItems(data.results || []);
         setTotalItems(data.totalItems || 0);
+      } catch (error) {
+        if (controller.signal.aborted || (error as Error).name === "AbortError") {
+          return;
+        }
+
+        throw error;
       } finally {
-        setLoading(false);
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
       }
     };
 
-    loadData();
+    void loadData();
 
     return () => controller.abort();
   }, [page, pageSize, appliedFilters, refreshToken]);

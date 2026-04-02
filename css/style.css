@@ -143,7 +143,10 @@ strong {
 }
 
 .third-section-bg {
-  background-color: var(--third-section-bg-color);
+  background-image: linear-gradient(rgba(18, 18, 18, 0.45), rgba(18, 18, 18, 0.45)), url(../images/camp_wide.png);
+	width: 100%;
+	background-size: cover;
+	background-repeat: no-repeat;
 }
 
 #section_3 .section-text {
