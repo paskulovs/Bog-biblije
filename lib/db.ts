@@ -1,8 +1,15 @@
 import { Pool, QueryResultRow } from "pg";
 
 const connectionStrings = [
+  process.env.NEON_DATABASE_URL,
+  process.env.DATABASE_URL,
+  process.env.NEON_POSTGRES_URL,
   process.env.POSTGRES_URL,
+  process.env.NEON_POSTGRES_PRISMA_URL,
   process.env.POSTGRES_PRISMA_URL,
+  process.env.NEON_DATABASE_URL_UNPOOLED,
+  process.env.DATABASE_URL_UNPOOLED,
+  process.env.NEON_POSTGRES_URL_NON_POOLING,
   process.env.POSTGRES_URL_NON_POOLING,
 ].filter((value, index, values): value is string => Boolean(value) && values.indexOf(value) === index);
 
