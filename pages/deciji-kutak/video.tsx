@@ -59,7 +59,7 @@ export default function ChildVideosPage({ videos, totalVideos }: ChildVideosPage
   return (
     <SiteLayout
       title="Dečiji Kutak | Hristova Školica | Bog Biblije"
-      description="Video materijali za decu u okviru dečijeg kutka sajta Bog Biblije."
+      description="Video materijali za decu."
       canonicalUrl="https://bogbiblije.com/deciji-kutak/video"
     >
       <section className="about-section section-padding page-shell">
@@ -69,7 +69,7 @@ export default function ChildVideosPage({ videos, totalVideos }: ChildVideosPage
               <em className="text-white">Dečiji kutak</em>
               <h1 className="text-white mt-2 mb-3">Hristova školica</h1>
               <p className="text-white mb-4">
-                Video sadržaj za decu i porodice, u skladu sa vizuelnim jezikom sajta Bog Biblije.
+                Video sadržaj za decu i porodice.
               </p>
 
               <div className="article-filter-row">
@@ -86,9 +86,6 @@ export default function ChildVideosPage({ videos, totalVideos }: ChildVideosPage
               <div className="col-lg-8 col-12">
                 <div className="content-empty-state">
                   <h4 className="text-white">Dečiji video sadržaj još nije dodat</h4>
-                  <p className="text-white mb-0">
-                    Čim baza vrati snimke iz dečijeg kutka, pojaviće se na ovoj stranici.
-                  </p>
                 </div>
               </div>
             ) : null}

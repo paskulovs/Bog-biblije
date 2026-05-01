@@ -7,6 +7,7 @@ import {
   getArticleBySlug,
   getMostReadArticles,
 } from "../../lib/article-store";
+import { isDatabaseConnectionError } from "../../lib/db";
 import { getArticleIdFromSlugParam, getArticlePath } from "../../lib/content-routes";
 import { getBlogPostById, getMostReadBlogPosts } from "../../lib/content-store";
 import { formatSerbianDate } from "../../lib/date";
@@ -23,16 +24,25 @@ export async function getServerSideProps(context: { params?: { slug?: string } }
     return { notFound: true };
   }
 
-  const databaseArticle = await getBlogPostById(getArticleIdFromSlugParam(slug));
-  if (databaseArticle) {
-    const mostReadArticles = await getMostReadBlogPosts(4, databaseArticle.id, false);
+  try {
+    const databaseArticle = await getBlogPostById(getArticleIdFromSlugParam(slug));
+    if (databaseArticle) {
+      const mostReadArticles = await getMostReadBlogPosts(4, databaseArticle.id, false);
 
-    return {
-      props: {
-        article: databaseArticle,
-        mostReadArticles,
-      },
-    };
+      return {
+        props: {
+          article: databaseArticle,
+          mostReadArticles,
+        },
+      };
+    }
+  } catch (error) {
+    if (!isDatabaseConnectionError(error)) {
+      throw error;
+    }
+
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`Database article lookup failed for slug "${slug}": ${message}`);
   }
 
   const article = await getArticleBySlug(slug);

@@ -1,5 +1,5 @@
 import { QueryResultRow } from "pg";
-import { getDatabasePool, isDatabaseConfigured } from "./db";
+import { isDatabaseConfigured, isDatabaseConnectionError, runDatabaseQuery } from "./db";
 import {
   BlogPost,
   BlogPostInput,
@@ -82,19 +82,39 @@ const parseSort = (
   };
 };
 
+const logReadFailure = (operation: string, error: unknown) => {
+  const message = error instanceof Error ? error.message : String(error);
+  console.error(`Database read failed during ${operation}: ${message}`);
+};
+
 const runQuery = async <T extends QueryResultRow>(text: string, values: unknown[] = []) => {
-  const pool = getDatabasePool();
-
-  if (!pool) {
-    return [] as T[];
-  }
-
-  const result = await pool.query<T>(text, values);
-  return result.rows;
+  return runDatabaseQuery<T>(text, values);
 };
 
 const runCountQuery = async (text: string, values: unknown[] = []) => {
   const rows = await runQuery<{ count: string }>(text, values);
+  return Number(rows[0]?.count || 0);
+};
+
+const runReadQuery = async <T extends QueryResultRow>(
+  operation: string,
+  text: string,
+  values: unknown[] = [],
+) => {
+  try {
+    return await runQuery<T>(text, values);
+  } catch (error) {
+    if (!isDatabaseConnectionError(error)) {
+      throw error;
+    }
+
+    logReadFailure(operation, error);
+    return [] as T[];
+  }
+};
+
+const runReadCountQuery = async (operation: string, text: string, values: unknown[] = []) => {
+  const rows = await runReadQuery<{ count: string }>(operation, text, values);
   return Number(rows[0]?.count || 0);
 };
 
@@ -124,7 +144,8 @@ export const getLatestBlogPosts = async (limit: number, isChildCorner = false) =
     return [] as BlogPost[];
   }
 
-  const rows = await runQuery(
+  const rows = await runReadQuery(
+    "getLatestBlogPosts",
     `${getBlogPostSelect()}
      WHERE "isChildCorner" = $1
      ORDER BY "createdAt" DESC
@@ -169,7 +190,8 @@ export const getBlogPosts = async ({
   }
 
   const whereClause = clauses.length ? `WHERE ${clauses.join(" AND ")}` : "";
-  const rows = await runQuery(
+  const rows = await runReadQuery(
+    "getBlogPosts",
     `${getBlogPostSelect()}
      ${whereClause}
      ORDER BY ${column} ${direction.toUpperCase()}
@@ -178,7 +200,8 @@ export const getBlogPosts = async ({
     values,
   );
   const countValues = values.slice(0, values.length - 2);
-  const totalItems = await runCountQuery(
+  const totalItems = await runReadCountQuery(
+    "getBlogPosts",
     `SELECT COUNT(*)::text AS count
      FROM "BlogPost"
      ${whereClause}`,
@@ -319,7 +342,8 @@ export const getMostReadBlogPosts = async (
     ? ` AND id <> $${values.push(excludeId)}`
     : "";
 
-  const rows = await runQuery(
+  const rows = await runReadQuery(
+    "getMostReadBlogPosts",
     `${getBlogPostSelect()}
      WHERE "isChildCorner" = $1${excludeClause}
      ORDER BY "readCount" DESC, "createdAt" DESC
@@ -363,7 +387,8 @@ export const getBooks = async ({
   }
 
   const whereClause = clauses.length ? `WHERE ${clauses.join(" AND ")}` : "";
-  const rows = await runQuery(
+  const rows = await runReadQuery(
+    "getBooks",
     `${getBookSelect()}
      ${whereClause}
      ORDER BY id DESC
@@ -372,7 +397,8 @@ export const getBooks = async ({
     values,
   );
   const countValues = values.slice(0, values.length - 2);
-  const totalItems = await runCountQuery(
+  const totalItems = await runReadCountQuery(
+    "getBooks",
     `SELECT COUNT(*)::text AS count
      FROM "Book"
      ${whereClause}`,
@@ -506,7 +532,8 @@ export const getVideos = async ({
   }
 
   const whereClause = clauses.length ? `WHERE ${clauses.join(" AND ")}` : "";
-  const rows = await runQuery(
+  const rows = await runReadQuery(
+    "getVideos",
     `${getVideoSelect()}
      ${whereClause}
      ORDER BY "createdAt" DESC
@@ -515,7 +542,8 @@ export const getVideos = async ({
     values,
   );
   const countValues = values.slice(0, values.length - 2);
-  const totalItems = await runCountQuery(
+  const totalItems = await runReadCountQuery(
+    "getVideos",
     `SELECT COUNT(*)::text AS count
      FROM "Video"
      ${whereClause}`,
@@ -639,14 +667,16 @@ export const searchSiteContent = async (searchText = ""): Promise<SearchResult> 
     : "";
 
   const [blogRows, bookRows] = await Promise.all([
-    runQuery(
+    runReadQuery(
+      "searchSiteContent.blogPosts",
       `${getBlogPostSelect()}
        ${blogWhere}
        ORDER BY "createdAt" DESC
        LIMIT 3`,
       blogValues,
     ),
-    runQuery(
+    runReadQuery(
+      "searchSiteContent.books",
       `${getBookSelect()}
        ${bookWhere}
        ORDER BY id DESC
