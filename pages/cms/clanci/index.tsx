@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import CmsModal from "../../../components/CmsModal";
 import CmsPagination from "../../../components/CmsPagination";
+import RichContentEditor from "../../../components/RichContentEditor";
 import { requireCmsPageAuth } from "../../../lib/auth";
 import { BlogPostInput, ReadableArticle } from "../../../lib/types";
 
@@ -14,6 +15,16 @@ const EMPTY_FORM: BlogPostInput = {
   imageUrl: "",
   audioUrl: "",
   isChildCorner: false,
+};
+
+const getTextContent = (html: string) => {
+  if (typeof window === "undefined") {
+    return html.replace(/<[^>]*>/g, " ").replace(/&nbsp;/g, " ").trim();
+  }
+
+  const container = window.document.createElement("div");
+  container.innerHTML = html;
+  return (container.textContent || "").replace(/\u00a0/g, " ").trim();
 };
 
 interface ArticlesResponse {
@@ -116,6 +127,12 @@ export default function CmsArticlesPage() {
 
   const handleSave = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!getTextContent(formState.content)) {
+      window.alert("Unesite sadržaj članka.");
+      return;
+    }
+
     setSaveLoading(true);
 
     try {
@@ -310,6 +327,7 @@ export default function CmsArticlesPage() {
         open={modalOpen}
         title={editingId ? "Izmena članka" : "Novi članak"}
         onClose={() => setModalOpen(false)}
+        closeOnBackdropClick={false}
       >
         <form className="cms-admin-form" onSubmit={handleSave}>
           <div className="cms-admin-field">
@@ -405,14 +423,10 @@ export default function CmsArticlesPage() {
             <label className="cms-admin-label" htmlFor="article-content">
               Sadržaj
             </label>
-            <textarea
+            <RichContentEditor
               id="article-content"
-              className="cms-admin-textarea cms-admin-textarea-lg"
               value={formState.content}
-              onChange={(event) =>
-                setFormState((current) => ({ ...current, content: event.target.value }))
-              }
-              required
+              onChange={(content) => setFormState((current) => ({ ...current, content }))}
             />
           </div>
 

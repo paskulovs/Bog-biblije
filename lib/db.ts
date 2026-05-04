@@ -22,6 +22,18 @@ const CONNECTION_ERROR_CODES = new Set([
   "ETIMEDOUT",
 ]);
 
+const SCHEMA_READ_FALLBACK_ERROR_CODES = new Set([
+  "42P01",
+]);
+
+const hasErrorCode = (error: unknown, codes: Set<string>) => {
+  if (!error || typeof error !== "object" || !("code" in error)) {
+    return false;
+  }
+
+  return codes.has(String(error.code));
+};
+
 const shouldUseSsl = (connectionString: string) =>
   !/(localhost|127\.0\.0\.1)/i.test(connectionString);
 
@@ -33,16 +45,15 @@ const getConnectionHost = (connectionString: string) => {
   }
 };
 
-const isRetryableConnectionError = (error: unknown) => {
-  if (!error || typeof error !== "object" || !("code" in error)) {
-    return false;
-  }
-
-  return CONNECTION_ERROR_CODES.has(String(error.code));
-};
+const isRetryableConnectionError = (error: unknown) =>
+  hasErrorCode(error, CONNECTION_ERROR_CODES);
 
 export const isDatabaseConnectionError = (error: unknown) =>
   isRetryableConnectionError(error);
+
+export const isDatabaseReadFallbackError = (error: unknown) =>
+  isRetryableConnectionError(error) ||
+  hasErrorCode(error, SCHEMA_READ_FALLBACK_ERROR_CODES);
 
 declare global {
   // eslint-disable-next-line no-var

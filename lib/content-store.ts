@@ -1,5 +1,6 @@
+import { randomUUID } from "crypto";
 import { QueryResultRow } from "pg";
-import { isDatabaseConfigured, isDatabaseConnectionError, runDatabaseQuery } from "./db";
+import { isDatabaseConfigured, isDatabaseReadFallbackError, runDatabaseQuery } from "./db";
 import {
   BlogPost,
   BlogPostInput,
@@ -16,6 +17,8 @@ type SortDirection = "asc" | "desc";
 
 const DEFAULT_IMAGE = "/images/bible_giving.jpg";
 const DEFAULT_VIDEO_IMAGE = "/images/bibles.jpg";
+
+const createId = () => randomUUID();
 
 const BLOG_SORT_COLUMNS: Record<SortField, string> = {
   createdAt: '"createdAt"',
@@ -104,7 +107,7 @@ const runReadQuery = async <T extends QueryResultRow>(
   try {
     return await runQuery<T>(text, values);
   } catch (error) {
-    if (!isDatabaseConnectionError(error)) {
+    if (!isDatabaseReadFallbackError(error)) {
       throw error;
     }
 
@@ -219,7 +222,8 @@ export const getBlogPostById = async (id: string) => {
     return null;
   }
 
-  const rows = await runQuery(
+  const rows = await runReadQuery(
+    "getBlogPostById",
     `${getBlogPostSelect()}
      WHERE id = $1
      LIMIT 1`,
@@ -235,10 +239,11 @@ export const createBlogPost = async (input: BlogPostInput) => {
   }
 
   const rows = await runQuery(
-    `INSERT INTO "BlogPost" (title, excerpt, content, author, "imageUrl", "audioUrl", "isChildCorner")
-     VALUES ($1, $2, $3, $4, $5, $6, $7)
+    `INSERT INTO "BlogPost" (id, title, excerpt, content, author, "imageUrl", "audioUrl", "isChildCorner")
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
      RETURNING id, title, excerpt, content, author, "imageUrl", "audioUrl", "readCount", "createdAt", "isChildCorner"`,
     [
+      createId(),
       input.title.trim(),
       input.excerpt.trim(),
       input.content.trim(),
@@ -308,7 +313,14 @@ export const incrementBlogPostReadCount = async (id: string) => {
      WHERE id = $1
      RETURNING id, title, excerpt, content, author, "imageUrl", "audioUrl", "readCount", "createdAt", "isChildCorner"`,
     [id],
-  );
+  ).catch((error) => {
+    if (!isDatabaseReadFallbackError(error)) {
+      throw error;
+    }
+
+    logReadFailure("incrementBlogPostReadCount", error);
+    return [];
+  });
 
   return rows[0] ? mapBlogPost(rows[0]) : null;
 };
@@ -416,7 +428,8 @@ export const getBookById = async (id: string) => {
     return null;
   }
 
-  const rows = await runQuery(
+  const rows = await runReadQuery(
+    "getBookById",
     `${getBookSelect()}
      WHERE id = $1
      LIMIT 1`,
@@ -432,10 +445,11 @@ export const createBook = async (input: BookInput) => {
   }
 
   const rows = await runQuery(
-    `INSERT INTO "Book" (title, author, "imageUrl", "pdfUrl", description)
-     VALUES ($1, $2, $3, $4, $5)
+    `INSERT INTO "Book" (id, title, author, "imageUrl", "pdfUrl", description)
+     VALUES ($1, $2, $3, $4, $5, $6)
      RETURNING id, title, author, "imageUrl", "pdfUrl", description`,
     [
+      createId(),
       input.title.trim(),
       input.author.trim(),
       normalizeOptionalString(input.imageUrl) || DEFAULT_IMAGE,
@@ -561,7 +575,8 @@ export const getVideoById = async (id: string) => {
     return null;
   }
 
-  const rows = await runQuery(
+  const rows = await runReadQuery(
+    "getVideoById",
     `${getVideoSelect()}
      WHERE id = $1
      LIMIT 1`,
@@ -577,10 +592,11 @@ export const createVideo = async (input: VideoInput) => {
   }
 
   const rows = await runQuery(
-    `INSERT INTO "Video" (title, url, "imageUrl", "categorySlug", "isYouTube")
-     VALUES ($1, $2, $3, $4, $5)
+    `INSERT INTO "Video" (id, title, url, "imageUrl", "categorySlug", "isYouTube")
+     VALUES ($1, $2, $3, $4, $5, $6)
      RETURNING id, title, url, "imageUrl", "categorySlug", "isYouTube", "createdAt"`,
     [
+      createId(),
       input.title.trim(),
       input.url.trim(),
       normalizeOptionalString(input.imageUrl) || DEFAULT_VIDEO_IMAGE,
