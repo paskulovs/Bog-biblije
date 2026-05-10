@@ -93,7 +93,6 @@ export default function ArticleDetailsPage({
         <div className="container">
           <div className="row justify-content-center mb-5">
             <div className="col-lg-10 col-12 text-center">
-              <em className="text-white">Članak</em>
               <h1 className="text-white article-title mb-3">{article.title}</h1>
               <p className="text-white article-summary">{article.excerpt}</p>
               <p className="article-meta-line">

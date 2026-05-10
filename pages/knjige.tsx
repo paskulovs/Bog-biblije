@@ -76,8 +76,7 @@ export default function BooksPage({ books, totalBooks, category }: BooksPageProp
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-10 col-12 text-center mb-5">
-              <em className="text-white">Sveta Božija Reč i korisna literatura</em>
-              <h1 className="text-white mt-2 mb-3">Knjige</h1>
+              <h1 className="text-white mb-3">Knjige</h1>
               <p className="text-white mb-4">{activeOption.description}</p>
 
               <div className="article-filter-row">

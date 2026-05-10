@@ -21,6 +21,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const page = Number(req.query.page || 0);
   const take = Number(req.query.take || 12);
   const categorySlug = typeof req.query.categorySlug === "string" ? req.query.categorySlug : null;
+  const categorySlugs =
+    typeof req.query.categorySlugs === "string"
+      ? req.query.categorySlugs.split(",").map((value) => value.trim()).filter(Boolean)
+      : Array.isArray(req.query.categorySlugs)
+        ? req.query.categorySlugs
+            .flatMap((value) => value.split(","))
+            .map((value) => value.trim())
+            .filter(Boolean)
+        : null;
   const title = typeof req.query.title === "string" ? req.query.title : undefined;
   const isYouTube =
     req.query.isYouTube === "true"
@@ -28,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       : req.query.isYouTube === "false"
         ? false
         : null;
-  const data = await getVideos({ page, take, categorySlug, title, isYouTube });
+  const data = await getVideos({ page, take, categorySlug, categorySlugs, title, isYouTube });
 
   return res.status(200).json(data);
 }

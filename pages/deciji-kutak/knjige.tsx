@@ -65,8 +65,7 @@ export default function ChildBooksPage({ posts, totalPosts }: ChildBooksPageProp
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-10 col-12 text-center mb-5">
-              <em className="text-white">Dečiji kutak</em>
-              <h1 className="text-white mt-2 mb-3">Biblija za decu</h1>
+              <h1 className="text-white mb-3">Biblija za decu</h1>
               <p className="text-white mb-4">
                 Sadržaj namenjen mlađima, prilagođen jeziku dece i porodice.
               </p>

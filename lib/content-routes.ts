@@ -37,9 +37,24 @@ export const VIDEO_CATEGORY_OPTIONS = [
     label: "Biblijski filmovi",
     description: "Tematski filmovi i video materijali za dublje proučavanje.",
   },
+  {
+    value: "komentari-biblije",
+    label: "Komentari Biblije",
+    description: "Biblijski komentari i objašnjenja za dublje razumevanje teksta.",
+  },
 ] as const;
 
-export const DEFAULT_VIDEO_CATEGORY = VIDEO_CATEGORY_OPTIONS[0].value;
+export const ALL_VIDEO_CATEGORIES = "sve";
+export const VIDEO_CATEGORY_FILTER_OPTIONS = [
+  {
+    value: ALL_VIDEO_CATEGORIES,
+    label: "Sve kategorije",
+    description: "Svi video materijali iz dostupnih kategorija.",
+  },
+  ...VIDEO_CATEGORY_OPTIONS,
+] as const;
+export const DEFAULT_VIDEO_CATEGORY = ALL_VIDEO_CATEGORIES;
+export const PUBLIC_VIDEO_CATEGORY_SLUGS = VIDEO_CATEGORY_OPTIONS.map((option) => option.value);
 export const CHILD_VIDEO_CATEGORY = "djeciji-kutak";
 
 export const getArticlePath = (article: Pick<ReadableArticle, "id" | "title" | "slug">) =>
@@ -61,8 +76,8 @@ export const normalizeBookCategory = (value: unknown) => {
 export const normalizeVideoCategory = (value: unknown) => {
   if (
     typeof value === "string" &&
-    (VIDEO_CATEGORY_OPTIONS.some((option) => option.value === value) ||
-      value === CHILD_VIDEO_CATEGORY)
+    (value === ALL_VIDEO_CATEGORIES ||
+      VIDEO_CATEGORY_OPTIONS.some((option) => option.value === value))
   ) {
     return value;
   }
@@ -70,8 +85,13 @@ export const normalizeVideoCategory = (value: unknown) => {
   return DEFAULT_VIDEO_CATEGORY;
 };
 
-export const getVideoWatchUrl = (video: Pick<Video, "isYouTube" | "url">) =>
-  video.isYouTube ? `https://www.youtube.com/watch?v=${video.url}` : video.url;
+export const getVideoWatchUrl = (video: Pick<Video, "isYouTube" | "url">) => {
+  if (!video.isYouTube || /^https?:\/\//i.test(video.url)) {
+    return video.url;
+  }
+
+  return `https://www.youtube.com/watch?v=${video.url}`;
+};
 
 export const getBookCtaHref = (book: Pick<Book, "pdfUrl">) =>
   book.pdfUrl ? book.pdfUrl : "/#section_6";

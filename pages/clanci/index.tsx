@@ -44,8 +44,7 @@ export default function ArticlesPage({ articles, sort }: ArticlesPageProps) {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-10 col-12 text-center mb-5">
-              <em className="text-white">U potrazi za mudrošću</em>
-              <h2 className="text-white mt-2 mb-3">Svi članci</h2>
+              <h2 className="text-white mb-3">Svi članci</h2>
               <p className="text-white mb-4">
                 Tekstovi, svedočenja i biblijske teme dostupni su na jednom mestu, uz isti vizuelni
                 jezik koji već koristi početna strana sajta.

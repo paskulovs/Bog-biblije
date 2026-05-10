@@ -159,8 +159,7 @@ export default function CmsVideosPage() {
   return (
     <section className="cms-admin-page">
       <div className="cms-admin-intro">
-        <em className="text-white">CMS</em>
-        <h1 className="text-white mt-2 mb-3">Upravljanje videima</h1>
+        <h1 className="text-white mb-3">Upravljanje videima</h1>
       </div>
 
       <div className="cms-admin-card">

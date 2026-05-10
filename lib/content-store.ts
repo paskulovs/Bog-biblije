@@ -519,12 +519,14 @@ export const getVideos = async ({
   page = 0,
   take = 12,
   categorySlug,
+  categorySlugs,
   title,
   isYouTube,
 }: {
   page?: number;
   take?: number;
   categorySlug?: string | null;
+  categorySlugs?: string[] | null;
   title?: string;
   isYouTube?: boolean | null;
 } = {}): Promise<PaginatedResult<Video>> => {
@@ -537,6 +539,17 @@ export const getVideos = async ({
 
   if (categorySlug?.trim()) {
     appendWhereClause(clauses, values, `"categorySlug" =`, categorySlug.trim());
+  } else {
+    const normalizedCategorySlugs = categorySlugs
+      ?.map((slug) => slug.trim())
+      .filter(Boolean);
+
+    if (normalizedCategorySlugs?.length) {
+      const placeholders = normalizedCategorySlugs
+        .map((slug) => `$${values.push(slug)}`)
+        .join(", ");
+      clauses.push(`"categorySlug" IN (${placeholders})`);
+    }
   }
   if (title?.trim()) {
     appendWhereClause(clauses, values, `title ILIKE`, `%${title.trim()}%`);

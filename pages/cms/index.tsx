@@ -23,8 +23,7 @@ export default function CmsHomePage() {
   return (
     <section className="cms-admin-page">
       <div className="cms-admin-intro">
-        <em className="text-white">Administracija sadržaja</em>
-        <h1 className="text-white mt-2 mb-3">CMS pregled</h1>
+        <h1 className="text-white mb-3">CMS pregled</h1>
         <p className="text-white mb-0">
           Tabele i forme prate strukturu iz referentnog projekta, ali su uklopljene u postojeći
           vizuelni identitet sajta Bog Biblije.

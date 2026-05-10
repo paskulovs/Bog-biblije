@@ -66,8 +66,7 @@ export default function ChildVideosPage({ videos, totalVideos }: ChildVideosPage
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-10 col-12 text-center mb-5">
-              <em className="text-white">Dečiji kutak</em>
-              <h1 className="text-white mt-2 mb-3">Hristova školica</h1>
+              <h1 className="text-white mb-3">Hristova školica</h1>
               <p className="text-white mb-4">
                 Video sadržaj za decu i porodice.
               </p>
