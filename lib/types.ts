@@ -94,4 +94,5 @@ export interface PaginatedResult<T> {
 export interface SearchResult {
   blogPosts: BlogPost[];
   books: Book[];
+  videos: Video[];
 }

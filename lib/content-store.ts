@@ -680,6 +680,7 @@ export const searchSiteContent = async (searchText = ""): Promise<SearchResult> 
     return {
       blogPosts: [],
       books: [],
+      videos: [],
     };
   }
 
@@ -687,6 +688,7 @@ export const searchSiteContent = async (searchText = ""): Promise<SearchResult> 
   const hasQuery = Boolean(trimmedQuery);
   const blogValues: unknown[] = [];
   const bookValues: unknown[] = [];
+  const videoValues: unknown[] = [];
 
   const blogWhere = hasQuery
     ? `WHERE title ILIKE $${blogValues.push(`%${trimmedQuery}%`)}`
@@ -694,8 +696,11 @@ export const searchSiteContent = async (searchText = ""): Promise<SearchResult> 
   const bookWhere = hasQuery
     ? `WHERE title ILIKE $${bookValues.push(`%${trimmedQuery}%`)}`
     : "";
+  const videoWhere = hasQuery
+    ? `WHERE title ILIKE $${videoValues.push(`%${trimmedQuery}%`)}`
+    : "";
 
-  const [blogRows, bookRows] = await Promise.all([
+  const [blogRows, bookRows, videoRows] = await Promise.all([
     runReadQuery(
       "searchSiteContent.blogPosts",
       `${getBlogPostSelect()}
@@ -712,10 +717,19 @@ export const searchSiteContent = async (searchText = ""): Promise<SearchResult> 
        LIMIT 3`,
       bookValues,
     ),
+    runReadQuery(
+      "searchSiteContent.videos",
+      `${getVideoSelect()}
+       ${videoWhere}
+       ORDER BY "createdAt" DESC
+       LIMIT 3`,
+      videoValues,
+    ),
   ]);
 
   return {
     blogPosts: blogRows.map(mapBlogPost),
     books: bookRows.map(mapBook),
+    videos: videoRows.map(mapVideo),
   };
 };

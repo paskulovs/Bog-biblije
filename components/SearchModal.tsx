@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
-import { getArticlePath } from "../lib/content-routes";
-import { Book, SearchResult } from "../lib/types";
+import { getArticlePath, getVideoWatchUrl } from "../lib/content-routes";
+import { Book, SearchResult, Video } from "../lib/types";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -11,6 +11,7 @@ interface SearchModalProps {
 const EMPTY_RESULTS: SearchResult = {
   blogPosts: [],
   books: [],
+  videos: [],
 };
 
 export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
@@ -96,7 +97,13 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
     await router.push("/knjige?tip=free-books");
   };
 
-  const hasResults = results.blogPosts.length > 0 || results.books.length > 0;
+  const handleVideoClick = (video: Video) => {
+    onClose();
+    window.open(getVideoWatchUrl(video), "_blank", "noopener,noreferrer");
+  };
+
+  const hasResults =
+    results.blogPosts.length > 0 || results.books.length > 0 || results.videos.length > 0;
 
   if (!isOpen) {
     return null;
@@ -114,7 +121,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
         <div className="search-modal-header">
           <div>
             <p className="search-modal-kicker">Pretraga sadržaja</p>
-            <h3 className="search-modal-title">Članci i knjige</h3>
+            <h3 className="search-modal-title">Članci, knjige i video</h3>
           </div>
 
           <button type="button" className="search-modal-close" onClick={onClose}>
@@ -130,7 +137,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
             className="search-modal-input"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Pretražite naslove članaka i knjiga..."
+            placeholder="Pretražite naslove članaka, knjiga i videa..."
           />
         </div>
 
@@ -179,11 +186,30 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
             </div>
           ) : null}
 
+          {results.videos.length ? (
+            <div className="search-modal-group">
+              <p className="search-modal-group-title">Video</p>
+              {results.videos.map((video) => (
+                <button
+                  key={video.id}
+                  type="button"
+                  className="search-result-button"
+                  onClick={() => handleVideoClick(video)}
+                >
+                  <span className="search-result-label">{video.title}</span>
+                  <span className="search-result-description">
+                    {video.isYouTube ? "YouTube" : "Video"}
+                  </span>
+                </button>
+              ))}
+            </div>
+          ) : null}
+
           {!isLoading && !hasResults ? (
             <div className="content-empty-state search-empty-state">
               <h4 className="text-white">Nema rezultata</h4>
               <p className="text-white mb-0">
-                Pokušajte sa drugim pojmom ili otvorite stranicu sa knjigama i člancima.
+                Pokušajte sa drugim pojmom ili otvorite stranicu sa knjigama, člancima i videom.
               </p>
             </div>
           ) : null}

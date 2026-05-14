@@ -16,6 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).json({
       blogPosts: localArticles.results,
       books: [],
+      videos: [],
     });
   }
 
