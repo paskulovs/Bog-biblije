@@ -273,12 +273,12 @@ export default function CmsArticlesPage() {
             <tbody>
               {items.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.title}</td>
-                  <td>{item.author}</td>
-                  <td>{item.excerpt}</td>
-                  <td>{item.isChildCorner ? "Da" : "Ne"}</td>
-                  <td>{item.readCount}</td>
-                  <td>
+                  <td data-label="Naslov">{item.title}</td>
+                  <td data-label="Autor">{item.author}</td>
+                  <td data-label="Kratki sadržaj">{item.excerpt}</td>
+                  <td data-label="Dečiji kutak">{item.isChildCorner ? "Da" : "Ne"}</td>
+                  <td data-label="Pregledi">{item.readCount}</td>
+                  <td data-label="Akcija">
                     <div className="cms-admin-row-actions">
                       <button
                         type="button"

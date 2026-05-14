@@ -252,11 +252,11 @@ export default function CmsBooksPage() {
             <tbody>
               {items.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.title}</td>
-                  <td>{item.author}</td>
-                  <td>{item.description || "Bez opisa"}</td>
-                  <td>{item.pdfUrl ? "Da" : "Ne"}</td>
-                  <td>
+                  <td data-label="Naslov">{item.title}</td>
+                  <td data-label="Autor">{item.author}</td>
+                  <td data-label="Opis">{item.description || "Bez opisa"}</td>
+                  <td data-label="PDF">{item.pdfUrl ? "Da" : "Ne"}</td>
+                  <td data-label="Akcija">
                     <div className="cms-admin-row-actions">
                       <button
                         type="button"

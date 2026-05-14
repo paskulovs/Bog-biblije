@@ -41,6 +41,9 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+  pages: {
+    signIn: "/auth/signin",
+  },
   secret: process.env.NEXTAUTH_SECRET || process.env.JWT_SECRET,
 };
 
@@ -55,7 +58,7 @@ export const requireCmsPageAuth: GetServerSideProps = async (context) => {
 
     return {
       redirect: {
-        destination: `/api/auth/signin?callbackUrl=${callbackUrl}`,
+        destination: `/auth/signin?callbackUrl=${callbackUrl}`,
         permanent: false,
       },
     };

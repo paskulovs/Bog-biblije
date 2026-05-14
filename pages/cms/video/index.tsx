@@ -269,11 +269,11 @@ export default function CmsVideosPage() {
             <tbody>
               {items.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.title}</td>
-                  <td>{item.categorySlug}</td>
-                  <td>{item.isYouTube ? "Da" : "Ne"}</td>
-                  <td>{item.url}</td>
-                  <td>
+                  <td data-label="Naslov">{item.title}</td>
+                  <td data-label="Kategorija">{item.categorySlug}</td>
+                  <td data-label="YouTube">{item.isYouTube ? "Da" : "Ne"}</td>
+                  <td data-label="URL">{item.url}</td>
+                  <td data-label="Akcija">
                     <div className="cms-admin-row-actions">
                       <button
                         type="button"

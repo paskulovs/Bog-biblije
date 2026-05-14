@@ -358,6 +358,174 @@ body.search-modal-open {
   overflow: hidden;
 }
 
+.auth-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 32px 18px;
+  background:
+    linear-gradient(115deg, rgba(12, 10, 7, 0.96) 0%, rgba(12, 10, 7, 0.8) 48%, rgba(76, 58, 38, 0.52) 100%),
+    url("/images/bible_with_leaves.jpg") center / cover no-repeat;
+}
+
+.auth-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, rgba(230, 200, 130, 0.18), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(207, 129, 65, 0.18), transparent 34%);
+  pointer-events: none;
+}
+
+.auth-panel {
+  width: min(100%, 460px);
+  position: relative;
+  z-index: 1;
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-medium);
+  background: rgba(0, 0, 0, 0.32);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(16px);
+}
+
+.auth-brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.auth-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--white-color);
+  font-size: 1.08rem;
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+}
+
+.auth-brand:hover {
+  color: var(--white-color);
+}
+
+.auth-brand-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.auth-badge {
+  flex: 0 0 auto;
+  border: 1px solid rgba(230, 200, 130, 0.32);
+  border-radius: var(--border-radius-large);
+  color: var(--secondary-color);
+  font-size: 0.78rem;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  line-height: 1;
+  padding: 8px 12px;
+}
+
+.auth-kicker {
+  color: var(--secondary-color);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.auth-title {
+  color: var(--white-color);
+  font-size: clamp(2.2rem, 5vw, 3.35rem);
+  line-height: 1.06;
+  margin-bottom: 12px;
+}
+
+.auth-copy {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 1.08rem;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.auth-form {
+  display: grid;
+  gap: 16px;
+}
+
+.auth-input-wrap {
+  position: relative;
+}
+
+.auth-input-icon {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 1.05rem;
+  line-height: 1;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.auth-input-wrap .cms-admin-input {
+  padding-left: 46px;
+}
+
+.auth-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border: 1px solid rgba(231, 111, 81, 0.32);
+  border-radius: var(--border-radius-small);
+  background: rgba(231, 111, 81, 0.14);
+  color: var(--white-color);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  padding: 12px 14px;
+}
+
+.auth-error i {
+  color: var(--link-hover-color);
+  line-height: 1.4;
+}
+
+.auth-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 4px;
+}
+
+.auth-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.auth-footer-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 22px;
+}
+
+.auth-back-link {
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 1rem;
+}
+
+.auth-back-link:hover {
+  color: var(--secondary-color);
+}
+
 .cms-shell {
   min-height: 100vh;
   display: grid;
@@ -707,6 +875,7 @@ body.search-modal-open {
 
 .cms-admin-table-wrap {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .cms-admin-table {
@@ -1075,10 +1244,63 @@ body.search-modal-open {
   }
 
   .cms-shell-sidebar {
-    position: static;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     height: auto;
     border-right: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px 12px;
+    background: rgba(13, 11, 8, 0.96);
+    backdrop-filter: blur(14px);
+  }
+
+  .cms-shell-brand {
+    margin-bottom: 0;
+    min-width: max-content;
+  }
+
+  .cms-shell-brand-logo {
+    width: 36px;
+    height: 36px;
+  }
+
+  .cms-shell-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: thin;
+  }
+
+  .cms-shell-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 38px;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 8px 12px;
+    line-height: 1;
+  }
+
+  .cms-admin-intro h1 {
+    font-size: 2.7rem;
+    line-height: 1.12;
+  }
+
+  .cms-admin-table-header h2 {
+    font-size: 2.1rem;
+    line-height: 1.14;
+  }
+
+  .cms-dashboard-card h3 {
+    font-size: 1.8rem;
+    line-height: 1.16;
   }
 
   .cms-shell-content {
@@ -1117,19 +1339,138 @@ body.search-modal-open {
     font-size: 1rem;
   }
 
+  .auth-shell {
+    padding: 18px 14px;
+  }
+
+  .auth-panel {
+    padding: 22px;
+    border-radius: 14px;
+  }
+
+  .auth-brand-row {
+    margin-bottom: 22px;
+  }
+
+  .auth-brand {
+    font-size: 1rem;
+  }
+
+  .auth-brand-logo {
+    width: 38px;
+    height: 38px;
+  }
+
+  .auth-title {
+    font-size: 2.25rem;
+  }
+
+  .auth-copy {
+    font-size: 1rem;
+  }
+
+  .auth-submit {
+    min-height: 48px;
+  }
+
+  .cms-shell-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 8px;
+    min-height: 0;
+    padding: 10px 14px;
+  }
+
+  .cms-shell-brand {
+    align-self: flex-start;
+    gap: 10px;
+    font-size: 1rem;
+    line-height: 1;
+    margin-bottom: 0;
+  }
+
+  .cms-shell-brand-logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .cms-shell-nav {
+    margin-right: -14px;
+    overflow-y: hidden;
+    padding-right: 14px;
+    width: calc(100% + 14px);
+  }
+
+  .cms-shell-link {
+    height: 34px;
+    padding: 7px 11px;
+    font-size: 0.95rem;
+  }
+
   .cms-shell-header {
-    padding: 16px 16px 0;
+    padding: 12px 14px 0;
+  }
+
+  .cms-shell-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 10px;
+  }
+
+  .cms-shell-actions .btn {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    white-space: normal;
   }
 
   .cms-shell-content {
-    padding: 16px;
+    padding: 14px;
+  }
+
+  .cms-admin-page {
+    gap: 16px;
   }
 
   .cms-admin-intro,
   .cms-admin-card,
   .cms-dashboard-card,
   .cms-modal-panel {
-    padding: 18px;
+    border-radius: 14px;
+    padding: 16px;
+  }
+
+  .cms-admin-intro h1 {
+    font-size: 2rem;
+    line-height: 1.15;
+  }
+
+  .cms-admin-intro p,
+  .cms-dashboard-card p {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .cms-dashboard-card h3 {
+    font-size: 1.45rem;
+  }
+
+  .cms-admin-table-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .cms-admin-input,
+  .cms-admin-select,
+  .cms-admin-textarea {
+    font-size: 16px;
+    padding: 12px 14px;
+  }
+
+  .cms-pagination-info {
+    text-align: center;
   }
 
   .article-sidebar-actions,
@@ -1154,9 +1495,97 @@ body.search-modal-open {
     width: 100%;
   }
 
+  .cms-admin-table-wrap {
+    overflow: visible;
+  }
+
+  .cms-admin-table {
+    display: block;
+    min-width: 0;
+  }
+
+  .cms-admin-table thead {
+    display: none;
+  }
+
+  .cms-admin-table tbody {
+    display: grid;
+    gap: 12px;
+  }
+
+  .cms-admin-table tr {
+    display: grid;
+    gap: 0;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .cms-admin-table td {
+    display: grid;
+    grid-template-columns: minmax(92px, 36%) minmax(0, 1fr);
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.95rem;
+    overflow-wrap: anywhere;
+  }
+
+  .cms-admin-table td::before {
+    content: attr(data-label);
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.72rem;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .cms-admin-table td:last-child {
+    border-bottom: 0;
+  }
+
+  .cms-admin-table td[data-label="Akcija"] {
+    display: block;
+  }
+
+  .cms-admin-table td[data-label="Akcija"]::before {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .cms-admin-table .cms-admin-empty {
+    display: block;
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  .cms-admin-table .cms-admin-empty::before {
+    content: none;
+  }
+
+  .cms-admin-row-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .article-sidebar-actions .btn,
   .content-card-actions .btn {
     width: 100%;
+  }
+
+  .cms-modal-backdrop {
+    align-items: stretch;
+    padding: 12px 10px;
+  }
+
+  .cms-modal-panel {
+    max-height: calc(100dvh - 24px);
+  }
+
+  .cms-modal-title {
+    font-size: 1.5rem;
+    line-height: 1.2;
   }
 
   .search-modal-panel {

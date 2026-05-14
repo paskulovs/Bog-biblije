@@ -29,7 +29,7 @@ export default function CmsLayout({ children, title = "CMS | Bog Biblije" }: Cms
         <aside className="cms-shell-sidebar">
           <Link href="/" passHref>
             <a className="cms-shell-brand">
-              <img src="/images/logo_small.png" alt="Bog Biblije" className="cms-shell-brand-logo" />
+              <img src="/images/logo_white.png" alt="Bog Biblije" className="cms-shell-brand-logo" />
               <span>Bog Biblije CMS</span>
             </a>
           </Link>
@@ -58,7 +58,7 @@ export default function CmsLayout({ children, title = "CMS | Bog Biblije" }: Cms
               <button
                 type="button"
                 className="btn custom-btn custom-border-btn"
-                onClick={() => signOut({ callbackUrl: "/api/auth/signin?callbackUrl=%2Fcms" })}
+                onClick={() => signOut({ callbackUrl: "/auth/signin?callbackUrl=%2Fcms" })}
               >
                 Odjava
               </button>
